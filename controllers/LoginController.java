@@ -59,11 +59,12 @@ public class LoginController extends HttpServlet {
 			        DirContext ctx = new InitialDirContext(ldapEnv);
 
 			        // Close the context when we're done
-			        json.put("result", true);
+			        request.getRequestDispatcher("/game.jsp").forward(request, response);
 			        ctx.close();
 
 		        } catch (NamingException e) {
-		        	json.put("result", false);
+		        	request.setAttribute("message", "Credenciales incorrectas");
+		            request.getRequestDispatcher("/index.jsp").forward(request, response);
 		        }
 		  }
 		  catch (Exception e) {
