@@ -23,12 +23,6 @@
 			  	 </div>
 			  </div>
 			  <div class="col-4">
-			  	<%for ( fontSize = 1; fontSize <= 3; fontSize++){ %>
-			         <font color = "green" size = "<%= fontSize %>">
-			            JSP Tutorial
-			         </font><br />
-			    <%}%>
-			    
                 <%
 				   String[] colors = {"A", "C", "G","D","Y","Ñ","A", "C", "G","D","Y","Ñ"};
 				   for (int i = 0; i < colors.length; i++) {
