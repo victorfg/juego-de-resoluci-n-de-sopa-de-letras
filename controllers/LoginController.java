@@ -34,9 +34,9 @@ public class LoginController extends HttpServlet {
     }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String username = request.getParameter("username");
 	    String password = request.getParameter("password");
 
@@ -50,8 +50,8 @@ public class LoginController extends HttpServlet {
 			  ldapEnv.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
 			  ldapEnv.put(Context.PROVIDER_URL, "ldap://localhost:10389");
 			  ldapEnv.put(Context.SECURITY_AUTHENTICATION, "simple");
-			  ldapEnv.put(Context.SECURITY_PRINCIPAL , "uid=admin,ou=system");
-			  ldapEnv.put(Context.SECURITY_CREDENTIALS, "123");
+			  ldapEnv.put(Context.SECURITY_PRINCIPAL , "uid="+username+",ou=system");
+			  ldapEnv.put(Context.SECURITY_CREDENTIALS, password);
 			  System.out.println(" autenticando:");		  
 			  
 			    try {
