@@ -1,4 +1,6 @@
 package sopaDeLetras;
+import java.util.ArrayList;
+import java.util.List;
 
 public class word {
 	private int id;
@@ -29,4 +31,20 @@ public class word {
 		this.value = value;
 	}
 	
+	
+	public static List getAllLetters() {
+	    
+	       	List listaLetras = new ArrayList<>();
+	        
+	       	listaLetras.add("A");
+	       	listaLetras.add("C");
+	        listaLetras.add("E");
+	        listaLetras.add("H");
+	        listaLetras.add("Q");
+	        listaLetras.add("Q");
+	        listaLetras.add("F");
+	        listaLetras.add("G");
+	        
+	        return listaLetras;
+	}
 }
