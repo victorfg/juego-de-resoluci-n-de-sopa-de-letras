@@ -22,8 +22,8 @@
 	<body>
 		<div class="limiter">
 			<div class="container-login100">
-				<div class="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55">
-					<form class="login100-form validate-form flex-sb flex-w">
+				<div class="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55">	
+					<form action="login" method="post" class="login100-form validate-form flex-sb flex-w">
 						<span class="login100-form-title p-b-32">
 							Login para empezar a jugar!
 						</span>
@@ -42,7 +42,7 @@
 						<div class="wrap-input100 validate-input m-b-12" data-validate = "Password is required">
 							<span class="btn-show-pass">
 							</span>
-							<input class="input100" type="password" name="pass" >
+							<input class="input100" type="password" name="password" >
 							<span class="focus-input100"></span>
 						</div>
 	
