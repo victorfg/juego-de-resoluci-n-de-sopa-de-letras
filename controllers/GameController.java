@@ -35,7 +35,6 @@ public class GameController extends HttpServlet {
 		// Estas dos variables son las que se tienen que enviar en el get request
 		ArrayList<word> words = getWordsFromDB(4);
 		char[][] table = generateTable(words);
-		
 	}
 
 	/**
