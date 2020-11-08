@@ -1,8 +1,62 @@
-@charset "ISO-8859-1";
+@font-face {
+  font-family: Raleway-Medium;
+  src: url('../fonts/raleway/Raleway-Medium.ttf'); 
+}
 
-.main {
-	display: flex;
-    flex-flow: row wrap;
-    justify-content: center;
-    align-items: center;
+body{
+	font-family: Raleway-Medium;
+	background-color: #ebebeb;
+}
+
+#puzzle > div { /* rows */
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* style for each square in the puzzle */
+.puzzleSquare {
+  height: 7vw;
+  width: 7vw;
+  text-transform: uppercase;
+  background-color: white;
+  border: 1px solid #e6e6e6;
+  background: #fff;
+  font: 5vw sans-serif;
+  border-radius:10px;
+}
+@media only screen and (min-width: 600px) {
+  .puzzleSquare {
+    height: 3.5rem;
+    width: 3.5rem;
+    font: 2.5rem sans-serif;
+  }
+}
+
+button::-moz-focus-inner {
+  border: 0;
+}
+
+/* indicates when a square has been selected */
+#puzzle .selected {
+  background-color: orange;
+}
+
+/* indicates that the square is part of a word that has been found */ 
+#puzzle .found {
+  background-color: blue;
+  color: white;
+}
+
+#puzzle .solved {
+  background-color: purple;
+  color: white;
+}
+
+/* indicates that all words have been found */
+#puzzle .complete {
+  background-color: green;
+}
+
+.margin-top-50{
+  margin-top: 50px;
 }

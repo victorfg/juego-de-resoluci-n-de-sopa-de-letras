@@ -22,12 +22,14 @@
 	<body>
 		<div class="limiter">
 			<div class="container-login100">
-				<div class="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55">	
+				<div class="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55">
 					<form action="login" method="post" class="login100-form validate-form flex-sb flex-w">
+						<c:if test="${not empty message}">
+					    	<div class="error-message">${message}</div>
+						</c:if>	
 						<span class="login100-form-title p-b-32">
 							Login para empezar a jugar!
 						</span>
-	
 						<span class="txt1 p-b-11">
 							Usuario
 						</span>
@@ -45,12 +47,12 @@
 							<input class="input100" type="password" name="password" >
 							<span class="focus-input100"></span>
 						</div>
-	
 						<div class="container-login100-form-btn">
 							<button class="login100-form-btn">
 								Entrar
 							</button>
 						</div>
+						<div class="margin-top-20">UserTest : Admin || 123</div>
 					</form>
 				</div>
 			</div>
