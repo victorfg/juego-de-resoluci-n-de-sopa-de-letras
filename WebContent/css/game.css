@@ -60,3 +60,17 @@ button::-moz-focus-inner {
 .margin-top-50{
   margin-top: 50px;
 }
+
+.margin-right-20{
+  margin-right: 20px;
+}
+
+
+.div-word-selected{
+	margin-top: 20%;
+}
+
+.div-word-selected .word-selected{
+	font-size: 20px;
+    font-weight: bold;
+}
