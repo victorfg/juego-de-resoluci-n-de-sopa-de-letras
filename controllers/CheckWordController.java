@@ -38,7 +38,8 @@ public class CheckWordController extends HttpServlet {
 		response.setContentType("application/json");
 	    response.setCharacterEncoding("utf-8");
 	    PrintWriter out = response.getWriter();
-		String gameId = request.getParameter("gameID");
+		String gameId = request.getParameter("gameId");
+		String word = request.getParameter("word");
 
 		JSONObject json = new JSONObject();
 		Boolean validated = (new Random()).nextBoolean();
