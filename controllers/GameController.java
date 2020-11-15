@@ -41,7 +41,7 @@ public class GameController extends HttpServlet {
 		    response.setCharacterEncoding("utf-8");
 		    PrintWriter out = response.getWriter();
 		    
-			/*// Estas dos variables son las que se tienen que enviar en el get request
+			// Estas dos variables son las que se tienen que enviar en el get request
 			ArrayList<String> words = getWordsFromDB(4);
 			//ArrayList<word> words = getWordsFromDB(4);
 			ArrayList<char[]> table = generateTable(words);
@@ -55,14 +55,13 @@ public class GameController extends HttpServlet {
 			for(int i = 0; i<table.size();i++) {
 				JSONArray tmpArr = new JSONArray();
 				for(int b = 0; b<table.get(i).length;b++) {
-					tmpArr.add(table.get(i)[b]);				
+					tmpArr.add(Character.toString(table.get(i)[b]));				
 				}
 				aTable.add(tmpArr); 
 				//aTable.add((new JSONArray()).addAll(table.get(i))); 
 			}		
-		    json.put("table", aTable);*/
-		    JSONObject json = new JSONObject();
-			json.put("NOOOOOOO", "SIIIIIIIIIII!");
+		    json.put("table", aTable);
+
 		    response.getWriter().print(json.toJSONString());			
 	}
 	
