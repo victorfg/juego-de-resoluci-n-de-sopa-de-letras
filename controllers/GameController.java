@@ -33,45 +33,36 @@ public class GameController extends HttpServlet {
     }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-	    response.setContentType("application/json");
-	    response.setCharacterEncoding("utf-8");
-	    PrintWriter out = response.getWriter();
-	    
-		// Estas dos variables son las que se tienen que enviar en el get request
-		ArrayList<String> words = getWordsFromDB(4);
-		//ArrayList<word> words = getWordsFromDB(4);
-		ArrayList<char[]> table = generateTable(words);
-		
-		JSONObject json = new JSONObject();
-		json.put("gameID", new Random().nextInt());
-		JSONArray aWords = new JSONArray();
-		aWords.addAll(words);
-		json.put("words", aWords);
-		JSONArray aTable = new JSONArray();
-		for(int i = 0; i<table.size();i++) {
-			JSONArray tmpArr = new JSONArray();
-			for(int b = 0; b<table.get(i).length;b++) {
-				tmpArr.add(table.get(i)[b]);				
-			}
-			aTable.add(tmpArr); 
-			//aTable.add((new JSONArray()).addAll(table.get(i))); 
-		}		
-	    json.put("table", aTable);
-		
-	    response.getWriter().print(json.toJSONString());
-		
-	}
-
-	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		  response.setContentType("application/json");
+		    response.setCharacterEncoding("utf-8");
+		    PrintWriter out = response.getWriter();
+		    
+			// Estas dos variables son las que se tienen que enviar en el get request
+			ArrayList<String> words = getWordsFromDB(4);
+			//ArrayList<word> words = getWordsFromDB(4);
+			ArrayList<char[]> table = generateTable(words);
+			
+			JSONObject json = new JSONObject();
+			json.put("gameID", new Random().nextInt());
+			JSONArray aWords = new JSONArray();
+			aWords.addAll(words);
+			json.put("words", aWords);
+			JSONArray aTable = new JSONArray();
+			for(int i = 0; i<table.size();i++) {
+				JSONArray tmpArr = new JSONArray();
+				for(int b = 0; b<table.get(i).length;b++) {
+					tmpArr.add(table.get(i)[b]);				
+				}
+				aTable.add(tmpArr); 
+				//aTable.add((new JSONArray()).addAll(table.get(i))); 
+			}		
+		    json.put("table", aTable);
+			
+		    response.getWriter().print(json.toJSONString());			
 	}
 	
 	private ArrayList<String> getWordsFromDB(int quantity) {
