@@ -35,12 +35,19 @@ public class CheckWordController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String user = request.getParameter("id");
-		String pass = request.getParameter("password");
-		if ("edu4java".equals(user) && "eli4java".equals(pass)) {
-			response(resp, "login ok");
-		} else {
-			response(resp, "invalid login");
-		}
+		response.setContentType("application/json");
+	    response.setCharacterEncoding("utf-8");
+	    PrintWriter out = response.getWriter();
+		String gameId = request.getParameter("gameID");
+
+		JSONObject json = new JSONObject();
+		Boolean validated = (new Random()).nextBoolean();
+		json.put("wordValidated", validated);
+		Boolean finished = false;
+		if(validated) {
+			finished = (new Random()).nextBoolean();			
+		}	
+		json.put("gameFinished",finished) ;
+		response.getWriter().print(json.toJSONString());	
 	}
 }
