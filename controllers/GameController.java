@@ -47,6 +47,7 @@ public class GameController extends HttpServlet {
 		ArrayList<char[]> table = generateTable(words);
 		
 		JSONObject json = new JSONObject();
+		json.put("gameID", new Random().nextInt());
 		JSONArray aWords = new JSONArray();
 		aWords.addAll(words);
 		json.put("words", aWords);
