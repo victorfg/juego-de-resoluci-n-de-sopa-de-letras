@@ -5,27 +5,28 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class DAOWord implements Actions {
-	private Database connection;
+	//private Database connection;
 	private word result;
 	
 	public DAOWord() {
-		this.connection = new Database();
+		//this.connection = new Database();
 	}
 	
 	@Override
 	public Boolean insert(Object obj) {
 		// TODO Auto-generated method stub
-		Connection conn = this.connection.connect();
+		//Connection conn = this.connection.connect();
 		PreparedStatement pst;
 		
 		this.result = (sopaDeLetras.word) obj;		
 		String sql = "insert into words(value) values(?)";
 		int count = 0;
 		
-		try {
+		/*try {
 			pst = conn.prepareStatement(sql);
 	        pst.setString(1, this.result.getValue());
 	        pst.executeUpdate();
@@ -33,18 +34,29 @@ public class DAOWord implements Actions {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}        		
+		}     */   		
         return count>0;
 	}
 	
 	@Override
 	public List<?> all() {
 		// TODO Auto-generated method stub
-		Connection conn = this.connection.connect();
+		//Connection conn = this.connection.connect();
 		PreparedStatement pst;
-		ResultSet rs;
-		List<word> words = new ArrayList<>();
+		ResultSet rs;		
+
+		List<String> words = new ArrayList<>();
+		words.add("manzana");
+		words.add("pie");
+		words.add("pera");
+		words.add("coche");
+		words.add("moto");
+		words.add("periodico");
+		words.add("metralleta");
+		words.add("asesino");				
 		
+		/*
+		List<word> words = new ArrayList<>();
 		String sql = "select * from words";		
 		try {
 			pst = conn.prepareStatement(sql);	       
@@ -60,7 +72,8 @@ public class DAOWord implements Actions {
 	        } catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}        		
+		}        
+		*/		
         return words;
 	}
 	
