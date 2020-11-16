@@ -41,6 +41,10 @@ button::-moz-focus-inner {
   background-color: orange;
 }
 
+#puzzle .complete-word {
+  background-color: blue;
+}
+
 /* indicates that the square is part of a word that has been found */ 
 #puzzle .found {
   background-color: blue;
@@ -61,6 +65,10 @@ button::-moz-focus-inner {
   margin-top: 50px;
 }
 
+.margin-top-10{
+  margin-top: 10px;
+}
+
 .margin-right-20{
   margin-right: 20px;
 }
@@ -73,4 +81,7 @@ button::-moz-focus-inner {
 .div-word-selected .word-selected{
 	font-size: 20px;
     font-weight: bold;
+}
+.font-weight-bold{
+	font-weight: bold;
 }
