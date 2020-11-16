@@ -11,7 +11,7 @@ public class Database {
 	private String password;
     public Database() {
         //this.driver = "com.mysql.jdbc.Driver";
-        this.url = "jdbc:mysql://localhost:3306"; ///tutorial
+        this.url = "jdbc:mysql://localhost:3306/p7?useSSL=false"; ///tutorial
         this.user = "root";
         this.password= "123"; //""
        
