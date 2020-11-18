@@ -1,16 +1,17 @@
 package sopaDeLetras;
-import java.util.ArrayList;
-import java.util.List;
 
-public class word {
+import javax.persistence.Embeddable;
+
+@Embeddable
+public class Word {
 	private int id;
 	private String value;
 	
-	public word() {
+	public Word() {
 		
 	}
 	
-	public word(int id, String value) {		
+	public Word(int id, String value) {		
 		this.id = id;
 		this.value = value;
 	}
@@ -31,8 +32,13 @@ public class word {
 		this.value = value;
 	}
 	
+   @Override
+   public String toString()
+   {
+      return "Result [id=" + id + ", value=" + value + "]";
+   }
 	
-	public static List getAllLetters() {
+	/*public static List getAllLetters() {
 	    
 	       	List listaLetras = new ArrayList<>();
 	        
@@ -46,5 +52,5 @@ public class word {
 	        listaLetras.add("G");
 	        
 	        return listaLetras;
-	}
+	}*/
 }

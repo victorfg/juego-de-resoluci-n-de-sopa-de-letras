@@ -1,8 +1,10 @@
 package sopaDeLetras;
 
 import java.sql.Date;
+import javax.persistence.Embeddable;
 
-public class result {
+@Embeddable
+public class Result {
 	private int id;
 	private int ldap_id;
 	private String word;
@@ -10,11 +12,11 @@ public class result {
 	private Date start_date;
 	private Date end_date;
 	
-	public result() {
+	public Result() {
 		
 	}
 	
-	public result(int id, int ldap_id, String word, String table, Date start_date, Date end_date) {
+	public Result(int id, int ldap_id, String word, String table, Date start_date, Date end_date) {
 		this.id = id;
 		this.ldap_id = ldap_id;
 		this.word = word;
@@ -70,5 +72,11 @@ public class result {
 	public void setEnd_date(Date end_date) {
 		this.end_date = end_date;
 	}
+	
+   @Override
+   public String toString()
+   {
+      return "Result [id=" + id + ", ldap_id=" + ldap_id + ", word=" + word + ", table=" + table + ", start_date=" + start_date +", end_date=" + end_date +"]";
+   }
 	
 }
