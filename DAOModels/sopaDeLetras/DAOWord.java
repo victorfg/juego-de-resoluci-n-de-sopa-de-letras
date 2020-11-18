@@ -1,81 +1,110 @@
 package sopaDeLetras;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+
 public class DAOWord implements Actions {
-	//private Database connection;
-	private word result;
+	private Word word;
+	
+   private static SessionFactory sessionFactory = null;
+
+   @BeforeClass
+   public static void setUp() throws Exception
+   {
+      sessionFactory = new Configuration().configure().buildSessionFactory();
+
+   }
+
+   @AfterClass
+   public static void tearDown() throws Exception
+   {
+      sessionFactory.close();
+   }
 	
 	public DAOWord() {
-		//this.connection = new Database();
 	}
 	
 	@Override
 	public Boolean insert(Object obj) {
 		// TODO Auto-generated method stub
-		//Connection conn = this.connection.connect();
-		PreparedStatement pst;
-		
-		this.result = (sopaDeLetras.word) obj;		
-		String sql = "insert into words(value) values(?)";
-		int count = 0;
-		
-		/*try {
-			pst = conn.prepareStatement(sql);
-	        pst.setString(1, this.result.getValue());
-	        pst.executeUpdate();
-	        conn.close();
-		} catch (SQLException e) {
+
+	
+		try {
+			  Session session = sessionFactory.openSession();			  
+		      session.beginTransaction();
+		      
+		      session.save((Word) obj);
+		      
+		      session.getTransaction().commit();
+		      session.close();		      
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}     */   		
-        return count>0;
+			 return false;
+		}        		
+        return true;
+	}
+	@Override
+	public Boolean update(Object obj) {
+		// TODO Auto-generated method stub
+		try {
+		      Session session = sessionFactory.openSession();
+		      session.beginTransaction();	      
+	
+		      session.update((Word) obj);
+		      
+		      session.getTransaction().commit();
+		      session.close();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			 return false;
+		}        		
+	    return true;
+	}
+
+	@Override
+	public Word select(int id) {
+		// TODO Auto-generated method stub
+		try {
+		      Session session = sessionFactory.openSession();
+		      session.beginTransaction();
+
+		      Word word = session.get( Word.class, id );
+
+		      session.getTransaction().commit();
+		      session.close();
+		      return word;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			 return null;
+		}        	
 	}
 	
+
 	@Override
 	public List<?> all() {
 		// TODO Auto-generated method stub
-		//Connection conn = this.connection.connect();
-		PreparedStatement pst;
-		ResultSet rs;		
-
-		List<String> words = new ArrayList<>();
-		words.add("manzana");
-		words.add("pie");
-		words.add("pera");
-		words.add("coche");
-		words.add("moto");
-		words.add("periodico");
-		words.add("metralleta");
-		words.add("asesino");				
-		
-		/*
-		List<word> words = new ArrayList<>();
-		String sql = "select * from words";		
 		try {
-			pst = conn.prepareStatement(sql);	       
-			 rs = pst.executeQuery();
-	            while(rs.next()){
-	            	words.add(
-            			new word(
-        					rs.getInt("id"),
-        					rs.getString("value")
-                        ));
-	            }
-	            conn.close();
-	        } catch (SQLException e) {
+			Session session = sessionFactory.openSession();
+
+			CriteriaBuilder builder = session.getCriteriaBuilder();
+			CriteriaQuery<Word> wordQuery = builder.createQuery(Word.class);
+			List<Word> words = session.createQuery(wordQuery).getResultList();
+			session.close();
+			return words;
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}        
-		*/		
-        return words;
+			 return null;
+		}    
 	}
+	
 	
 	//not implemented for this dao model
 	@Override
@@ -83,19 +112,4 @@ public class DAOWord implements Actions {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	@Override
-	public Boolean update(Object obj) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<?> select(String column, String value) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-
 }
