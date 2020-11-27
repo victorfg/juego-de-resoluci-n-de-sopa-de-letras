@@ -1,17 +1,36 @@
-package sopaDeLetras;
+package sopaDeLetras.models;
 
-import javax.persistence.Embeddable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-@Embeddable
+@Entity
+@Table(name="words")
 public class Word {
-	private int id;
-	private String value;
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id")
+	protected int id;
+	
+	@Column(name="value")
+	protected String value;
 	
 	public Word() {
 		
 	}
 	
+	public Word(String value) {		
+		super();
+		this.id = id;
+		this.value = value;
+	}
+	
 	public Word(int id, String value) {		
+		super();
 		this.id = id;
 		this.value = value;
 	}

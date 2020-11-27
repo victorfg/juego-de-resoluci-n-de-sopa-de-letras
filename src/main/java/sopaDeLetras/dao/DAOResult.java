@@ -1,4 +1,4 @@
-package sopaDeLetras;
+package sopaDeLetras.dao;
 
 import java.util.List;
 
@@ -10,6 +10,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+
+import sopaDeLetras.models.Result;
 
 public class DAOResult implements Actions {
 	private Result result;

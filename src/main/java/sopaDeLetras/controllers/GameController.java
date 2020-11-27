@@ -1,3 +1,4 @@
+package sopaDeLetras.controllers;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -14,8 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import sopaDeLetras.DAOWord;
-import sopaDeLetras.word;
+import sopaDeLetras.dao.DAOWord;
+import sopaDeLetras.models.Word;
+
 /**
  * Servlet implementation class GameController
  */
@@ -66,31 +68,19 @@ public class GameController extends HttpServlet {
 	}
 	
 	private ArrayList<String> getWordsFromDB(int quantity) {
-		//private ArrayList<word> getWordsFromDB(int quantity) {
-		
-		 DAOWord wordDB = new DAOWord();
 		 ArrayList<String> words = new ArrayList<>();
-		 List<?> word = wordDB.all();
-		
-		for(int i = 0; i < quantity; i ++) {
-			int size = word.size();
+		 List<Word> wordItems = (new DAOWord()).all();
+	
+
+		for(int i = 0; i < quantity; i ++) {	
+			 int size = wordItems.size();
+			 if(size==0) {
+				 return words;
+			 }
 			int randomNumber = (int) Math.random() * ((size - 0) + 1) + 0;
-			words.add((String) word.get(randomNumber));
-			word.remove(randomNumber);
+			words.add((String) wordItems.get(randomNumber).getValue());
+			wordItems.remove(randomNumber);
 		}
-		
-		/*			 	 
-		 ArrayList<word> words = new ArrayList<>();
-		 List<?> word = wordDB.all();
-		
-		for(int i = 0; i < quantity; i ++) {
-			int size = word.size();
-			int randomNumber = (int) Math.random() * ((size - 0) + 1) + 0;
-			words.add((word) word.get(randomNumber));
-			word.remove(randomNumber);
-		}
-		*/
-		
 		return words;
 	}
 	

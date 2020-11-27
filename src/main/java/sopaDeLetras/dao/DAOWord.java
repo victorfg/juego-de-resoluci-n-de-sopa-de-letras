@@ -1,44 +1,28 @@
-package sopaDeLetras;
+package sopaDeLetras.dao;
 
 import java.util.List;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
+
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+
+import sopaDeLetras.helpers.DatabaseHelper;
+import sopaDeLetras.models.Word;
+
+
 
 public class DAOWord implements Actions {
 	private Word word;
 	
-   private static SessionFactory sessionFactory = null;
-
-   @BeforeClass
-   public static void setUp() throws Exception
-   {
-      sessionFactory = new Configuration().configure().buildSessionFactory();
-
-   }
-
-   @AfterClass
-   public static void tearDown() throws Exception
-   {
-      sessionFactory.close();
-   }
-	
-	public DAOWord() {
+  	public DAOWord() {
 	}
 	
 	@Override
 	public Boolean insert(Object obj) {
-		// TODO Auto-generated method stub
-
-	
-		try {
-			  Session session = sessionFactory.openSession();			  
+		// TODO Auto-generated method stub	
+		try (Session session = DatabaseHelper.getSessionFactory().openSession()) {		  
 		      session.beginTransaction();
 		      
 		      session.save((Word) obj);
@@ -54,8 +38,7 @@ public class DAOWord implements Actions {
 	@Override
 	public Boolean update(Object obj) {
 		// TODO Auto-generated method stub
-		try {
-		      Session session = sessionFactory.openSession();
+		try (Session session = DatabaseHelper.getSessionFactory().openSession()) {		
 		      session.beginTransaction();	      
 	
 		      session.update((Word) obj);
@@ -72,8 +55,7 @@ public class DAOWord implements Actions {
 	@Override
 	public Word select(int id) {
 		// TODO Auto-generated method stub
-		try {
-		      Session session = sessionFactory.openSession();
+		try (Session session = DatabaseHelper.getSessionFactory().openSession()) {		
 		      session.beginTransaction();
 
 		      Word word = session.get( Word.class, id );
@@ -88,21 +70,26 @@ public class DAOWord implements Actions {
 	}
 	
 
-	@Override
-	public List<?> all() {
-		// TODO Auto-generated method stub
-		try {
-			Session session = sessionFactory.openSession();
-
-			CriteriaBuilder builder = session.getCriteriaBuilder();
-			CriteriaQuery<Word> wordQuery = builder.createQuery(Word.class);
-			List<Word> words = session.createQuery(wordQuery).getResultList();
-			session.close();
-			return words;
+	@SuppressWarnings("unchecked")
+	public List<Word> all() {
+		Transaction transaction = null;
+		List<Word> listOfWord = null;
+		try (Session session = DatabaseHelper.getSessionFactory().openSession()) {
+			// start a transaction
+			transaction = session.beginTransaction();
+			// get an user object
+			Query query = session.createQuery("from Word");
+			listOfWord = query.getResultList();
+			
+			// commit transaction
+			transaction.commit();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			 return null;
-		}    
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			e.printStackTrace();
+		}
+		return listOfWord;
 	}
 	
 	

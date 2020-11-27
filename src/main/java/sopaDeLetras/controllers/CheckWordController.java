@@ -1,3 +1,4 @@
+package sopaDeLetras.controllers;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -14,8 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import sopaDeLetras.DAOWord;
-import sopaDeLetras.word;
+import sopaDeLetras.dao.DAOWord;
 /**
  * Servlet implementation class GameController
  */

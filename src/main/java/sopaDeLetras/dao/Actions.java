@@ -1,4 +1,4 @@
-package sopaDeLetras;
+package sopaDeLetras.dao;
 
 import java.util.List;
 

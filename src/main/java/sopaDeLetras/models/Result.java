@@ -1,4 +1,4 @@
-package sopaDeLetras;
+package sopaDeLetras.models;
 
 import java.sql.Date;
 import javax.persistence.Embeddable;
