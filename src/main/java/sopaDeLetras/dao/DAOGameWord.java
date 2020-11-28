@@ -97,6 +97,48 @@ public class DAOGameWord implements Actions {
 		}   
 	    return gameWord;
 	}
+	
+	public GameWord selectByWord(int word_id, int game_id) {
+		Transaction transaction = null;
+		GameWord gameWord = null;
+		try (Session session = DatabaseHelper.getSessionFactory().openSession()) {
+			transaction = session.beginTransaction();
+
+			String queryString="from GameWord WHERE word_id = :word_id and game_id = :game_id";
+			Query query = session.createQuery(queryString);
+			query.setParameter("word_id", word_id);
+			query.setParameter("game_id", game_id);
+			gameWord = (GameWord) query.getSingleResult();	
+
+			transaction.commit();
+		} catch (Exception e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			e.printStackTrace();
+		}   
+	    return gameWord;
+	}
+	
+	public Boolean checkIfGameEnded(int game_id) {
+		Transaction transaction = null;
+		int remainingWords = 0;
+		try (Session session = DatabaseHelper.getSessionFactory().openSession()) {
+			transaction = session.beginTransaction();
+
+			Query query = session.createQuery("from GameWord where game_id = :game_id and completed = 0");
+			query.setParameter("game_id", game_id);
+			remainingWords = query.getResultList().size();	
+
+			transaction.commit();
+		} catch (Exception e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			e.printStackTrace();
+		}   
+	    return remainingWords==0;
+	}
 
 	@SuppressWarnings("unchecked")
 	public List<Game> all() {
