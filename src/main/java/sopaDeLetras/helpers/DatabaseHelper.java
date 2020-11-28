@@ -10,6 +10,8 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
 
+import sopaDeLetras.models.Game;
+import sopaDeLetras.models.GameWord;
 import sopaDeLetras.models.Word;
 
 public class DatabaseHelper {
@@ -37,6 +39,8 @@ public class DatabaseHelper {
 
 				    configuration.setProperties(settings);
 				    configuration.addAnnotatedClass(Word.class);
+				    configuration.addAnnotatedClass(Game.class);
+				    configuration.addAnnotatedClass(GameWord.class);
 
 				    ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
 				      .applySettings(configuration.getProperties()).build();

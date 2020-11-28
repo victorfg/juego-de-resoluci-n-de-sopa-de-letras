@@ -1,6 +1,9 @@
 package sopaDeLetras.controllers;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -15,7 +18,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import sopaDeLetras.dao.DAOGame;
+import sopaDeLetras.dao.DAOGameWord;
 import sopaDeLetras.dao.DAOWord;
+import sopaDeLetras.helpers.JsonHelper;
+import sopaDeLetras.models.Game;
+import sopaDeLetras.models.GameWord;
 import sopaDeLetras.models.Word;
 
 /**
@@ -38,37 +46,61 @@ public class GameController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		  response.setContentType("application/json");
 		    response.setCharacterEncoding("utf-8");
+		    if(request.getParameter("ldap_user")==null) {
+		    	JSONObject json = new JSONObject();
+		    	json.put("ldap_user", null);
+		    	json.put("error", "ldap_user cannot be null");				
+		    	response.getWriter().print(json.toJSONString());
+		    }
+		    String ldap_user = request.getParameter("ldap_user");
 		    PrintWriter out = response.getWriter();
-		    
-			// Estas dos variables son las que se tienen que enviar en el get request
-			ArrayList<String> words = getWordsFromDB(4);
-			//ArrayList<word> words = getWordsFromDB(4);
-			ArrayList<char[]> table = generateTable(words);
+		    //TODO closing old sesions for this user
+		    (new DAOGame()).closeOldSessionsByUser(ldap_user);
+		    //TODO generating new session for this user		    	
+			ArrayList<Word> words = getWordsFromDB(4);
+			ArrayList<char[]> table = generateTable(words);			
+			//TODO saving new session
+			int gameId = 0;
+			Game game = new Game(
+					ldap_user, JsonHelper.toJSON(table), Date.valueOf(LocalDate.now())
+					);
+			gameId = (new DAOGame()).insert(game);
+			for(Word word: words) {
+				GameWord gameWord = new GameWord(
+						gameId, word.getId(), false
+						);
+				(new DAOGameWord()).insert(gameWord);
+			}
+			//formating result	
+			String jsonResult = this.format(gameId, words, table);			
 			
-			JSONObject json = new JSONObject();
-			json.put("gameID", new Random().nextInt());
-			JSONArray aWords = new JSONArray();
-			aWords.addAll(words);
-			json.put("words", aWords);
-			JSONArray aTable = new JSONArray();
-			for(int i = 0; i<table.size();i++) {
-				JSONArray tmpArr = new JSONArray();
-				for(int b = 0; b<table.get(i).length;b++) {
-					tmpArr.add(Character.toString(table.get(i)[b]));				
-				}
-				aTable.add(tmpArr); 
-				//aTable.add((new JSONArray()).addAll(table.get(i))); 
-			}		
-		    json.put("table", aTable);
-
-		    response.getWriter().print(json.toJSONString());			
+		    response.getWriter().print(jsonResult);			
+	}
+	private String format(int gameId,ArrayList<Word> words,ArrayList<char[]> table) {
+		JSONObject json = new JSONObject();
+		json.put("gameID", gameId);
+		JSONArray aWords = new JSONArray();
+		for(Word word: words) {
+			aWords.add(word.getValue());
+		}
+		json.put("words", aWords);
+		JSONArray aTable = new JSONArray();
+		for(int i = 0; i<table.size();i++) {
+			JSONArray tmpArr = new JSONArray();
+			for(int b = 0; b<table.get(i).length;b++) {
+				tmpArr.add(Character.toString(table.get(i)[b]));				
+			}
+			aTable.add(tmpArr); 
+			//aTable.add((new JSONArray()).addAll(table.get(i))); 
+		}		
+	    json.put("table", aTable);
+	    return json.toJSONString();
 	}
 	
-	private ArrayList<String> getWordsFromDB(int quantity) {
-		 ArrayList<String> words = new ArrayList<>();
+	private ArrayList<Word> getWordsFromDB(int quantity) {
+		 ArrayList<Word> words = new ArrayList<>();
 		 List<Word> wordItems = (new DAOWord()).all();
 	
 
@@ -78,13 +110,13 @@ public class GameController extends HttpServlet {
 				 return words;
 			 }
 			int randomNumber = (int) Math.random() * ((size - 0) + 1) + 0;
-			words.add((String) wordItems.get(randomNumber).getValue());
+			words.add(wordItems.get(randomNumber)); //.getValue()
 			wordItems.remove(randomNumber);
 		}
 		return words;
 	}
 	
-	private ArrayList<char[]> generateTable(ArrayList<String> words){
+	private ArrayList<char[]> generateTable(ArrayList<Word> words){
 		//private char[][] generateTable(ArrayList<word> words){
 		int tableLength = 8;
 		char[][] table = new char[tableLength][tableLength];
@@ -96,7 +128,7 @@ public class GameController extends HttpServlet {
 		}
 		
 		for(int i = 0; i < words.size(); i++) {
-			String word = words.get(i).toString();
+			String word = words.get(i).getValue().toString();
 
 			Direction direction = generateDirection();
 			
