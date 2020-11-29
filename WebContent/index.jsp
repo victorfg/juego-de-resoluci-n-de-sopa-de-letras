@@ -48,7 +48,7 @@
 							<span class="focus-input100"></span>
 						</div>
 						<div class="container-login100-form-btn">
-							<button class="login100-form-btn">
+							<button id="submit" class="login100-form-btn">
 								Entrar
 							</button>
 						</div>
@@ -60,5 +60,7 @@
 	</body>
 </html>
 <script>
-	localStorage.setItem('ldap_user',document.getElementsByName("username")[0].value);
+	$( "#submit" ).click(function() {
+		localStorage.setItem('ldap_user',document.getElementsByName("username")[0].value);
+	});
 </script>

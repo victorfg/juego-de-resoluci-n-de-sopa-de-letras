@@ -160,14 +160,14 @@ public class GameController extends HttpServlet {
 			switch(direction) {
 				case DOWN:
 					charPos = 0;
-					for(int pos = initialVerPos; pos<wordSize; pos++) {
+					for(int pos = initialVerPos; charPos<=wordSize; pos++) {
 						table[pos][initialHorPos] = word.charAt(charPos);
 						charPos++;
 					}
 					break;
 				case RIGTH:
 					charPos = 0;
-					for(int pos = initialHorPos; pos<wordSize; pos++) {
+					for(int pos = initialHorPos; charPos<=wordSize; pos++) {
 						table[initialVerPos][pos] = word.charAt(charPos);
 						charPos++;
 					}
