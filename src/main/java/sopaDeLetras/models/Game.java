@@ -107,7 +107,7 @@ public class Game {
    @Override
    public String toString()
    {
-      return "Result [id=" + id + ", ldap_user=" + ldap_user + ", table=" + table + ", start_date=" + start_date +", end_date=" + end_date +"]";
+      return "Result [id=" + id + ", ldap_user=" + ldap_user + ", board=" + board + ", start_date=" + start_date +", end_date=" + end_date +"]";
    }
 	
 }
