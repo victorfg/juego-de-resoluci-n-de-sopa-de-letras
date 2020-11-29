@@ -1,6 +1,6 @@
 # WordPuzzle
 
-[Video presentation (spanish)](http://vfernandez.me/uoc/video_sopa_letras.mp4)
+[Video presentation](http://vfernandez.me/uoc/video_sopa_letras.mp4)
 
 juego-de-resolucion-de-sopa-de-letras is a wordpuzzle application. This is a very simple puzzle game, where the player try to find some words in a grid of letters in horizontal and vertical directions.
 
