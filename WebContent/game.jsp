@@ -56,6 +56,7 @@
 	var wordSelected = "";
 	var renderButtonDelete = true;
 	var gameId;
+	var ldapUser;
 	
 	var startTurn = function (ev) {
 		if (xLocationFirstLetter == ''){
@@ -193,7 +194,7 @@
 		        $.ajax({
 		            type: "POST",
 		            url: 'checkword',
-		            data: { gameID:gameId,word:$(".word-selected")[0].innerText },
+		            data: { game_id:gameId,word:$(".word-selected")[0].innerText,ldap_user:ldapUser },
 		            success: function(response){
 		            	// juego acabado
 		            	if (response.gameFinished){
@@ -227,8 +228,8 @@
 	};
 	
     $(document).ready(function() {
-    	
-        $.post( "game", function( data ) {
+		ldapUser = localStorage.getItem('ldap_user');
+        $.post( "game", {ldap_user:ldapUser}, function( data ) {
         	gameId = data.gameID;
 			for (j = 0; j < data.words.length; j++) {
 				 $( ".words-search" ).append( "<div>" + data.words[j] + "</div>" );

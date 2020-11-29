@@ -59,3 +59,6 @@
 		</div>
 	</body>
 </html>
+<script>
+	localStorage.setItem('ldap_user',document.getElementsByName("username")[0].value);
+</script>
