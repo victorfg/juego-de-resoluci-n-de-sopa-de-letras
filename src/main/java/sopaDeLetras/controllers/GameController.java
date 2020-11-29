@@ -105,11 +105,11 @@ public class GameController extends HttpServlet {
 	
 
 		for(int i = 0; i < quantity; i ++) {	
-			 int size = wordItems.size();
+			 int size = wordItems.size() - 1;
 			 if(size==0) {
 				 return words;
 			 }
-			int randomNumber = (int) Math.random() * ((size - 0) + 1) + 0;
+			int randomNumber = (int) new Random().nextInt(size - 0 + 1) + 0;
 			words.add(wordItems.get(randomNumber)); //.getValue()
 			wordItems.remove(randomNumber);
 		}
@@ -135,7 +135,7 @@ public class GameController extends HttpServlet {
 			int minPos = 0;
 			int maxPos = 7;
 			
-			int wordSize = word.length();
+			int wordSize = word.length()-1;
 			
 			switch(direction) {
 			case DOWN:
@@ -151,8 +151,9 @@ public class GameController extends HttpServlet {
 				break;
 			}
 			
-			int initialVerPos = (int) Math.random() * ((maxPos - minPos) + 1) + minPos;
-			int initialHorPos = (int) Math.random() * ((maxPos - minPos) + 1) + minPos;
+			int initialVerPos = (int) ((minPos>maxPos)?new Random().nextInt(minPos - maxPos + 1) + maxPos:new Random().nextInt(maxPos - minPos + 1) + minPos);
+			int initialHorPos = (int) ((minPos>maxPos)?new Random().nextInt(minPos - maxPos + 1) + maxPos:new Random().nextInt(maxPos - minPos + 1) + minPos);
+
 			
 			int charPos = 0;
 			
@@ -204,7 +205,8 @@ public class GameController extends HttpServlet {
 	}
 	
 	private Direction generateDirection() {
-		int randomNumber = (int) (Math.random() * 4);
+		int randomNumber = (int) new Random().nextInt(4);
+				//(Math.random() * 4);
 		Direction direction = null;
 		switch(randomNumber) {
 			case 0:
